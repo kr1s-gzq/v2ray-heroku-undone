@@ -127,4 +127,4 @@ fi
 cd /v2raybin/v2ray-$V_VER-linux-$SYS_Bit
 ./v2ray &
 cd /caddybin
-./caddy -conf="Caddyfile"
+./caddy run --config Caddyfile
