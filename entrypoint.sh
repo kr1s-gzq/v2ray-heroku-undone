@@ -36,11 +36,12 @@ unzip v2ray.zip -d v2ray-$V_VER-linux-$SYS_Bit
 rm -rf v2ray.zip
 chmod +x /v2raybin/v2ray-$V_VER-linux-$SYS_Bit/*
 
-PATH_VER=`wget -qO- "https://api.github.com/repos/caddyserver/caddy/releases/latest" | grep 'tag_name' | cut -d\" -f4`
-FILE_VER=`echo ${PATH_VER: 1}`
+#C_VER=`wget -qO- "https://api.github.com/repos/caddyserver/caddy/releases/latest" | grep 'tag_name' | cut -d\" -f4`
+#FILE_VER=`echo ${PATH_VER: 1}`
+C_VER=v1.0.4
 mkdir /caddybin
 cd /caddybin
-wget --no-check-certificate -qO 'caddy.tar.gz' "https://github.com/caddyserver/caddy/releases/download/$PATH_VER/caddy_$FILE_VER$BitVer"
+wget --no-check-certificate -qO 'caddy.tar.gz' "https://github.com/caddyserver/caddy/releases/download/$C_VER/caddy_$C_VER$BitVer"
 tar xvf caddy.tar.gz
 rm -rf caddy.tar.gz
 chmod +x caddy
@@ -88,9 +89,12 @@ EOF
 cat <<-EOF > /caddybin/Caddyfile
 http://0.0.0.0:${PORT}
 {
-	root * /wwwroot
-	reverse_proxy ${V2_Path} localhost:2333 {
-		header_up -Origin
+	root /wwwroot		
+	index index.html
+	timeouts none
+	proxy ${V2_Path} localhost:2333 {	
+		websocket	
+		header_upstream -Origin
 	}
 }
 EOF
@@ -124,4 +128,4 @@ fi
 cd /v2raybin/v2ray-$V_VER-linux-$SYS_Bit
 ./v2ray &
 cd /caddybin
-./caddy run --config Caddyfile
+./caddy -conf="Caddyfile"
