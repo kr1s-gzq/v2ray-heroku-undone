@@ -32,14 +32,14 @@ fi
 mkdir /v2raybin
 cd /v2raybin
 wget --no-check-certificate -qO 'v2ray.zip' "https://github.com/v2fly/v2ray-core/releases/download/$V_VER/v2ray-linux-$SYS_Bit.zip"
-unzip v2ray.zip
+unzip v2ray.zip -d v2ray-$V_VER-linux-$SYS_Bit
 rm -rf v2ray.zip
 chmod +x /v2raybin/v2ray-$V_VER-linux-$SYS_Bit/*
 
 C_VER=`wget -qO- "https://api.github.com/repos/mholt/caddy/releases/latest" | grep 'tag_name' | cut -d\" -f4`
 mkdir /caddybin
 cd /caddybin
-wget --no-check-certificate -qO 'caddy.tar.gz' "https://github.com/mholt/caddy/releases/download/$C_VER/caddy_$C_VER$BitVer"
+wget --no-check-certificate -qO 'caddy.tar.gz' "https://github.com/caddyserver/caddy/releases/download/$C_VER/caddy_$C_VER$BitVer"
 tar xvf caddy.tar.gz
 rm -rf caddy.tar.gz
 chmod +x caddy
