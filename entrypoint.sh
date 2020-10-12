@@ -36,10 +36,11 @@ unzip v2ray.zip -d v2ray-$V_VER-linux-$SYS_Bit
 rm -rf v2ray.zip
 chmod +x /v2raybin/v2ray-$V_VER-linux-$SYS_Bit/*
 
-C_VER=`wget -qO- "https://api.github.com/repos/caddyserver/caddy/releases/latest" | grep 'tag_name' | cut -d\" -f4`
+PATH_VER=`wget -qO- "https://api.github.com/repos/caddyserver/caddy/releases/latest" | grep 'tag_name' | cut -d\" -f4`
+FILE_VER=echo ${PATH_VER: 1}
 mkdir /caddybin
 cd /caddybin
-wget --no-check-certificate -qO 'caddy.tar.gz' "https://github.com/caddyserver/caddy/releases/download/$C_VER/caddy_$C_VER$BitVer"
+wget --no-check-certificate -qO 'caddy.tar.gz' "https://github.com/caddyserver/caddy/releases/download/$PATH_VER/caddy_$FILE_VER$BitVer"
 tar xvf caddy.tar.gz
 rm -rf caddy.tar.gz
 chmod +x caddy
