@@ -88,12 +88,9 @@ EOF
 cat <<-EOF > /caddybin/Caddyfile
 http://0.0.0.0:${PORT}
 {
-	root /wwwroot
-	index index.html
-	timeouts none
-	proxy ${V2_Path} localhost:2333 {
-		websocket
-		header_upstream -Origin
+	root * /wwwroot
+	reverse_proxy ${V2_Path} localhost:2333 {
+		header_up -Origin
 	}
 }
 EOF
